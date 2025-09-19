@@ -17,12 +17,12 @@ show_help() {
     echo "  g-clone <remote_url> <local_dir>      - Clone a repository from remote URL"
     echo "  g-commit -m \"<message>\"              - Add and commit changes"
     echo "  g-push                                - Push committed changes to remote"
+    echo "  g-pushall -m \"<message>\"             - Add, commit, and push changes in one command"
     echo ""
     echo -e "${GREEN}File Operations:${NC}"
     echo "  g-mkdir <directory_name>              - Create a directory in the repository"
     echo "  g-rm <file_name>                      - Delete a file from the repository"
     echo "  g-rmdir <directory_name>              - Delete a directory and its contents"
-    echo "  g-ls <directory>                      - List contents of a directory"
     echo ""
     echo -e "${GREEN}General:${NC}"
     echo "  g-help                                - Show this help message"
@@ -34,8 +34,8 @@ show_help() {
     echo "  ./git-commands.sh g-init myproject"
     echo "  ./git-commands.sh g-clone https://github.com/user/repo.git myrepo"
     echo "  ./git-commands.sh g-commit -m \"Initial commit\""
+    echo "  ./git-commands.sh g-pushall -m \"Quick commit and push\""
     echo "  ./git-commands.sh g-mkdir docs"
-    echo "  ./git-commands.sh g-ls ."
 }
 
 # Check if we're in a git repository
@@ -152,6 +152,49 @@ g-push() {
     echo -e "${GREEN}Success: Changes pushed to remote repository${NC}"
 }
 
+g-pushall() {
+    local commit_message=""
+    local flag="$1"
+    
+    if [ "$flag" != "-m" ]; then
+        echo -e "${RED}Error: -m flag required for commit message${NC}"
+        echo "Usage: g-pushall -m \"<commit_message>\""
+        return 1
+    fi
+    
+    commit_message="$2"
+    if [ -z "$commit_message" ]; then
+        echo -e "${RED}Error: Commit message required${NC}"
+        echo "Usage: g-pushall -m \"<commit_message>\""
+        return 1
+    fi
+    
+    if ! check_git_repo; then
+        return 1
+    fi
+    
+    echo -e "${YELLOW}Adding all changes...${NC}"
+    if ! git add .; then
+        echo -e "${RED}Error: Failed to add changes${NC}"
+        return 1
+    fi
+    
+    echo -e "${YELLOW}Committing changes...${NC}"
+    if ! git commit -m "$commit_message"; then
+        echo -e "${RED}Error: Failed to commit changes${NC}"
+        return 1
+    fi
+    
+    echo -e "${YELLOW}Pushing changes to remote repository...${NC}"
+    if ! git push; then
+        echo -e "${RED}Error: Failed to push changes${NC}"
+        echo "Make sure you have a remote repository configured and proper permissions"
+        return 1
+    fi
+    
+    echo -e "${GREEN}Success: Changes committed and pushed with message: '$commit_message'${NC}"
+}
+
 g-mkdir() {
     local directory_name="$1"
     
@@ -233,32 +276,6 @@ g-rmdir() {
     echo -e "${GREEN}Success: Directory '$directory_name' deleted${NC}"
 }
 
-g-ls() {
-    local directory="$1"
-    
-    if [ -z "$directory" ]; then
-        echo -e "${RED}Error: Directory name required${NC}"
-        echo "Usage: g-ls <directory>"
-        return 1
-    fi
-    
-    if ! check_git_repo; then
-        return 1
-    fi
-    
-    if [ ! -d "$directory" ]; then
-        echo -e "${RED}Error: Directory '$directory' does not exist${NC}"
-        return 1
-    fi
-    
-    echo -e "${BLUE}Contents of '$directory':${NC}"
-    echo "----------------------------------------"
-    if ! ls -la "$directory"; then
-        echo -e "${RED}Error: Failed to list directory contents${NC}"
-        return 1
-    fi
-    echo "----------------------------------------"
-}
 
 case "$1" in
     "g-init")
@@ -277,6 +294,10 @@ case "$1" in
         shift
         g-push "$@"
         ;;
+    "g-pushall")
+        shift
+        g-pushall "$@"
+        ;;
     "g-mkdir")
         shift
         g-mkdir "$@"
@@ -288,10 +309,6 @@ case "$1" in
     "g-rmdir")
         shift
         g-rmdir "$@"
-        ;;
-    "g-ls")
-        shift
-        g-ls "$@"
         ;;
     "g-help"|"help"|"-h"|"--help"|"")
         show_help

@@ -31,6 +31,7 @@ All commands follow the format: `./git-commands.sh <command> [arguments]`
 | `g-clone`  | Clone a repository from remote URL          | `./git-commands.sh g-clone <remote_url> <local_directory>` |
 | `g-commit` | Add and commit changes to repository        | `./git-commands.sh g-commit -m "<commit_message>"`         |
 | `g-push`   | Push committed changes to remote repository | `./git-commands.sh g-push`                                 |
+| `g-pushall`| Add, commit, and push changes in one command | `./git-commands.sh g-pushall -m "<commit_message>"`        |
 
 #### File Operations
 
@@ -39,7 +40,6 @@ All commands follow the format: `./git-commands.sh <command> [arguments]`
 | `g-mkdir` | Create a directory in the repository | `./git-commands.sh g-mkdir <directory_name>` |
 | `g-rm`    | Delete a file from the repository    | `./git-commands.sh g-rm <file_name>`         |
 | `g-rmdir` | Delete a directory and its contents  | `./git-commands.sh g-rmdir <directory_name>` |
-| `g-ls`    | List contents of a directory         | `./git-commands.sh g-ls <directory>`         |
 
 #### General
 
@@ -63,14 +63,11 @@ cd myproject
 ./git-commands.sh g-mkdir src
 echo "Hello World" > src/main.txt
 
-# List directory contents
-./git-commands.sh g-ls .
+# List directory contents using standard Linux command
+ls -la
 
-# Commit changes
-./git-commands.sh g-commit -m "Initial project setup"
-
-# Push to remote (if remote is configured)
-./git-commands.sh g-push
+# Commit and push changes in one command
+./git-commands.sh g-pushall -m "Initial project setup"
 ```
 
 ### Cloning and Working with Existing Repositories
@@ -91,19 +88,18 @@ cd myrepo
 # Delete a directory
 ./git-commands.sh g-rmdir temp
 
-# Commit and push changes
-./git-commands.sh g-commit -m "Updated project structure"
-./git-commands.sh g-push
+# Commit and push changes in one command
+./git-commands.sh g-pushall -m "Updated project structure"
 ```
 
 ### File Management
 
 ```bash
-# List current directory contents
-./git-commands.sh g-ls .
+# List current directory contents using standard Linux command
+ls -la
 
-# List specific directory contents
-./git-commands.sh g-ls docs
+# List specific directory contents using standard Linux command
+ls -la docs
 
 # Create multiple directories
 ./git-commands.sh g-mkdir config
