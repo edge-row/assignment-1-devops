@@ -31,14 +31,14 @@ A command-line tool for Git repository management with integrated file operation
     **For Bash users:**
 
     ```bash
-    echo 'export PATH="$PATH:$(pwd)"' >> ~/.bashrc
+    echo "export PATH=\"\$PATH:$(pwd)\"" >> ~/.bashrc
     source ~/.bashrc
     ```
 
     **For Zsh users:**
 
     ```bash
-    echo 'export PATH="$PATH:$(pwd)"' >> ~/.zshrc
+    echo "export PATH=\"\$PATH:$(pwd)\"" >> ~/.zshrc
     source ~/.zshrc
     ```
 
@@ -69,14 +69,14 @@ If you prefer to set up manually:
     **For Bash users:**
 
     ```bash
-    echo 'export PATH="$PATH:$(pwd)"' >> ~/.bashrc
+    echo "export PATH=\"\$PATH:$(pwd)\"" >> ~/.bashrc
     source ~/.bashrc
     ```
 
     **For Zsh users:**
 
     ```bash
-    echo 'export PATH="$PATH:$(pwd)"' >> ~/.zshrc
+    echo "export PATH=\"\$PATH:$(pwd)\"" >> ~/.zshrc
     source ~/.zshrc
     ```
 
