@@ -218,6 +218,9 @@ g-mkdir() {
         return 1
     fi
     
+    echo -e "${YELLOW}Directory created. Note: Git doesn't track empty directories.${NC}"
+    echo -e "${YELLOW}Add files to the directory and use 'g-commit' to stage and commit them.${NC}"
+    
     echo -e "${GREEN}Success: Directory '$directory_name' created${NC}"
 }
 
