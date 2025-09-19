@@ -246,7 +246,14 @@ g-rm() {
             echo -e "${RED}Error: Failed to remove file '$file_name' from Git${NC}"
             return 1
         fi
-        echo -e "${GREEN}Success: File '$file_name' removed from Git and file system${NC}"
+        
+        echo -e "${YELLOW}Committing deletion...${NC}"
+        if ! git commit -m "Remove file: $file_name"; then
+            echo -e "${RED}Error: Failed to commit deletion${NC}"
+            return 1
+        fi
+        
+        echo -e "${GREEN}Success: File '$file_name' removed and committed${NC}"
     else
         if ! rm "$file_name"; then
             echo -e "${RED}Error: Failed to delete file '$file_name'${NC}"
@@ -281,7 +288,14 @@ g-rmdir() {
             echo -e "${RED}Error: Failed to remove directory '$directory_name' from Git${NC}"
             return 1
         fi
-        echo -e "${GREEN}Success: Directory '$directory_name' removed from Git and file system${NC}"
+        
+        echo -e "${YELLOW}Committing deletion...${NC}"
+        if ! git commit -m "Remove directory: $directory_name"; then
+            echo -e "${RED}Error: Failed to commit deletion${NC}"
+            return 1
+        fi
+        
+        echo -e "${GREEN}Success: Directory '$directory_name' removed and committed${NC}"
     else
         if ! rm -rf "$directory_name"; then
             echo -e "${RED}Error: Failed to delete directory '$directory_name'${NC}"

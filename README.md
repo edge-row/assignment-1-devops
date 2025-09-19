@@ -176,12 +176,12 @@ Commands can be used in two ways:
 
 #### File Operations
 
-| Command   | Description                               | Usage                      |
-| --------- | ----------------------------------------- | -------------------------- |
-| `g-mkdir` | Create a directory in the repository      | `g-mkdir <directory_name>` |
-| `g-rm`    | Delete a file (with Git integration)      | `g-rm <file_name>`         |
-| `g-rmdir` | Delete a directory (with Git integration) | `g-rmdir <directory_name>` |
-| `g-ls`    | List contents of a directory              | `g-ls <directory>`         |
+| Command   | Description                           | Usage                      |
+| --------- | ------------------------------------- | -------------------------- |
+| `g-mkdir` | Create a directory in the repository  | `g-mkdir <directory_name>` |
+| `g-rm`    | Delete a file (with auto-commit)      | `g-rm <file_name>`         |
+| `g-rmdir` | Delete a directory (with auto-commit) | `g-rmdir <directory_name>` |
+| `g-ls`    | List contents of a directory          | `g-ls <directory>`         |
 
 #### General
 
@@ -232,15 +232,15 @@ g-pushall -m "Quick update"
 # List directory contents
 g-ls .
 
-# Smart file removal (handles Git tracking automatically)
-g-rm file.txt
-g-rmdir old_folder
+# Smart file removal (auto-commits deletions)
+g-rm file.txt        # Commits: "Remove file: file.txt"
+g-rmdir old_folder   # Commits: "Remove directory: old_folder"
 ```
 
 ## Smart Git Integration
 
 -   **File Operations**: `g-rm` and `g-rmdir` automatically detect Git tracking
-    -   Tracked files: Uses `git rm` for proper Git integration
+    -   Tracked files: Uses `git rm` + auto-commits with descriptive messages
     -   Untracked files: Uses regular file system operations
 -   **Error Handling**: Comprehensive validation with clear error messages
 -   **Color-coded Output**: Red for errors, green for success, yellow for progress
