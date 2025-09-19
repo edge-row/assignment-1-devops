@@ -25,13 +25,13 @@ All commands follow the format: `./git-commands.sh <command> [arguments]`
 
 #### Git Operations
 
-| Command    | Description                                 | Usage                                                      |
-| ---------- | ------------------------------------------- | ---------------------------------------------------------- |
-| `g-init`   | Initialize a new Git repository             | `./git-commands.sh g-init <directory>`                     |
-| `g-clone`  | Clone a repository from remote URL          | `./git-commands.sh g-clone <remote_url> <local_directory>` |
-| `g-commit` | Add and commit changes to repository        | `./git-commands.sh g-commit -m "<commit_message>"`         |
-| `g-push`   | Push committed changes to remote repository | `./git-commands.sh g-push`                                 |
-| `g-pushall`| Add, commit, and push changes in one command | `./git-commands.sh g-pushall -m "<commit_message>"`        |
+| Command     | Description                                  | Usage                                                      |
+| ----------- | -------------------------------------------- | ---------------------------------------------------------- |
+| `g-init`    | Initialize a new Git repository              | `./git-commands.sh g-init <directory>`                     |
+| `g-clone`   | Clone a repository from remote URL           | `./git-commands.sh g-clone <remote_url> <local_directory>` |
+| `g-commit`  | Add and commit changes to repository         | `./git-commands.sh g-commit -m "<commit_message>"`         |
+| `g-push`    | Push committed changes to remote repository  | `./git-commands.sh g-push`                                 |
+| `g-pushall` | Add, commit, and push changes in one command | `./git-commands.sh g-pushall -m "<commit_message>"`        |
 
 #### File Operations
 
