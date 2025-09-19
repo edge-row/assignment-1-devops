@@ -10,6 +10,10 @@ A command-line tool for Git repository management with integrated file operation
 
 ## Installation
 
+Please view the video as well for quick setup, demonstration, and uninstallation guide:
+
+https://www.youtube.com/watch?v=uENIyf2FD10
+
 ### Quick Setup
 
 1. **Clone the repository:**
