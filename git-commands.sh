@@ -240,13 +240,21 @@ g-rm() {
         return 1
     fi
     
-    echo -e "${YELLOW}Deleting file '$file_name'...${NC}"
-    if ! rm "$file_name"; then
-        echo -e "${RED}Error: Failed to delete file '$file_name'${NC}"
-        return 1
-    fi
+    echo -e "${YELLOW}Removing file '$file_name' from Git and file system...${NC}"
     
-    echo -e "${GREEN}Success: File '$file_name' deleted${NC}"
+    if git ls-files --error-unmatch "$file_name" > /dev/null 2>&1; then
+        if ! git rm "$file_name"; then
+            echo -e "${RED}Error: Failed to remove file '$file_name' from Git${NC}"
+            return 1
+        fi
+        echo -e "${GREEN}Success: File '$file_name' removed from Git and file system${NC}"
+    else
+        if ! rm "$file_name"; then
+            echo -e "${RED}Error: Failed to delete file '$file_name'${NC}"
+            return 1
+        fi
+        echo -e "${GREEN}Success: File '$file_name' deleted from file system (not tracked by Git)${NC}"
+    fi
 }
 
 g-rmdir() {
@@ -267,13 +275,21 @@ g-rmdir() {
         return 1
     fi
     
-    echo -e "${YELLOW}Deleting directory '$directory_name' and its contents...${NC}"
-    if ! rm -rf "$directory_name"; then
-        echo -e "${RED}Error: Failed to delete directory '$directory_name'${NC}"
-        return 1
-    fi
+    echo -e "${YELLOW}Removing directory '$directory_name' from Git and file system...${NC}"
     
-    echo -e "${GREEN}Success: Directory '$directory_name' deleted${NC}"
+    if git ls-files "$directory_name" | grep -q .; then
+        if ! git rm -r "$directory_name"; then
+            echo -e "${RED}Error: Failed to remove directory '$directory_name' from Git${NC}"
+            return 1
+        fi
+        echo -e "${GREEN}Success: Directory '$directory_name' removed from Git and file system${NC}"
+    else
+        if ! rm -rf "$directory_name"; then
+            echo -e "${RED}Error: Failed to delete directory '$directory_name'${NC}"
+            return 1
+        fi
+        echo -e "${GREEN}Success: Directory '$directory_name' deleted from file system (not tracked by Git)${NC}"
+    fi
 }
 
 
