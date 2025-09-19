@@ -1,7 +1,4 @@
 #!/bin/bash
-# File: uninstall.sh
-
-# Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -12,11 +9,9 @@ echo -e "${BLUE}MyGit Uninstall Script${NC}"
 echo -e "${BLUE}======================${NC}"
 echo ""
 
-# Get the current directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 echo -e "${YELLOW}Script directory: $SCRIPT_DIR${NC}"
 
-# Remove symlinks
 echo -e "${YELLOW}Removing symlinks...${NC}"
 COMMANDS=("g-init" "g-clone" "g-commit" "g-push" "g-pushall" "g-mkdir" "g-rm" "g-rmdir" "g-ls" "g-help")
 
@@ -29,7 +24,6 @@ for cmd in "${COMMANDS[@]}"; do
     fi
 done
 
-# Note: PATH removal is now handled manually by the user
 echo -e "${YELLOW}Note: You will need to manually remove the PATH entry from your shell configuration${NC}"
 echo -e "${YELLOW}See README.md for detailed uninstall instructions${NC}"
 

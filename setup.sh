@@ -1,7 +1,4 @@
 #!/bin/bash
-# File: setup.sh
-
-# Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -12,25 +9,20 @@ echo -e "${BLUE}MyGit Setup Script${NC}"
 echo -e "${BLUE}==================${NC}"
 echo ""
 
-# Get the current directory (where the script is located)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 echo -e "${YELLOW}Script directory: $SCRIPT_DIR${NC}"
 
-# Check if git-commands.sh exists
 if [ ! -f "$SCRIPT_DIR/git-commands.sh" ]; then
     echo -e "${RED}Error: git-commands.sh not found in $SCRIPT_DIR${NC}"
     exit 1
 fi
 
-# Make git-commands.sh executable
 echo -e "${YELLOW}Making git-commands.sh executable...${NC}"
 chmod +x "$SCRIPT_DIR/git-commands.sh"
 
-# Note: PATH modification is now handled manually by the user
 echo -e "${YELLOW}Note: You will need to manually add the directory to your PATH${NC}"
 echo -e "${YELLOW}See README.md for detailed installation instructions${NC}"
 
-# Step 1: Create symlinks
 echo -e "${YELLOW}Creating symlinks...${NC}"
 
 COMMANDS=("g-init" "g-clone" "g-commit" "g-push" "g-pushall" "g-mkdir" "g-rm" "g-rmdir" "g-ls" "g-help")
@@ -44,14 +36,11 @@ for cmd in "${COMMANDS[@]}"; do
     fi
 done
 
-# Step 2: Update git-commands.sh to handle symlinks
 echo -e "${YELLOW}Updating git-commands.sh to handle symlinks...${NC}"
 
-# Check if the symlink handling code already exists
 if grep -q "COMMAND_NAME=\$(basename \"\$0\")" "$SCRIPT_DIR/git-commands.sh"; then
     echo -e "${GREEN}Symlink handling code already exists${NC}"
 else
-    # Add symlink handling code to the end of git-commands.sh
     cat >> "$SCRIPT_DIR/git-commands.sh" << 'EOF'
 
 # Symlink handling - detect when called via symlink

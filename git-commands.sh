@@ -38,7 +38,6 @@ show_help() {
     echo "  ./git-commands.sh g-mkdir docs"
 }
 
-# Check if we're in a git repository
 check_git_repo() {
     if ! git rev-parse --git-dir > /dev/null 2>&1; then
         echo -e "${RED}Error: Not in a Git repository${NC}"
@@ -293,7 +292,6 @@ g-rmdir() {
 }
 
 
-# Main command dispatcher - only run when called directly (not via symlink)
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]] && [[ "$(basename "$0")" == "git-commands.sh" ]]; then
     case "$1" in
         "g-init")
@@ -343,7 +341,6 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]] && [[ "$(basename "$0")" == "git-commands
     esac
 fi
 
-# Symlink handling - detect when called via symlink
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]] && [[ "$(basename "$0")" != "git-commands.sh" ]]; then
     COMMAND_NAME=$(basename "$0")
     
@@ -379,7 +376,6 @@ if [[ "${BASH_SOURCE[0]}" == "${0}" ]] && [[ "$(basename "$0")" != "git-commands
             show_help
             ;;
         "git-commands.sh")
-            # This should never be reached due to the condition above
             echo -e "${RED}Error: This should not happen${NC}"
             exit 1
             ;;
