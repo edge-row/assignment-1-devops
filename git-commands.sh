@@ -293,45 +293,100 @@ g-rmdir() {
 }
 
 
-case "$1" in
-    "g-init")
-        shift
-        g-init "$@"
-        ;;
-    "g-clone")
-        shift
-        g-clone "$@"
-        ;;
-    "g-commit")
-        shift
-        g-commit "$@"
-        ;;
-    "g-push")
-        shift
-        g-push "$@"
-        ;;
-    "g-pushall")
-        shift
-        g-pushall "$@"
-        ;;
-    "g-mkdir")
-        shift
-        g-mkdir "$@"
-        ;;
-    "g-rm")
-        shift
-        g-rm "$@"
-        ;;
-    "g-rmdir")
-        shift
-        g-rmdir "$@"
-        ;;
-    "g-help"|"help"|"-h"|"--help"|"")
-        show_help
-        ;;
-    *)
-        echo -e "${RED}Error: Unknown command '$1'${NC}"
-        echo "Use './git-commands.sh g-help' to see available commands"
-        exit 1
-        ;;
-esac
+# Main command dispatcher - only run when called directly (not via symlink)
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]] && [[ "$(basename "$0")" == "git-commands.sh" ]]; then
+    case "$1" in
+        "g-init")
+            shift
+            g-init "$@"
+            ;;
+        "g-clone")
+            shift
+            g-clone "$@"
+            ;;
+        "g-commit")
+            shift
+            g-commit "$@"
+            ;;
+        "g-push")
+            shift
+            g-push "$@"
+            ;;
+        "g-pushall")
+            shift
+            g-pushall "$@"
+            ;;
+        "g-mkdir")
+            shift
+            g-mkdir "$@"
+            ;;
+        "g-rm")
+            shift
+            g-rm "$@"
+            ;;
+        "g-rmdir")
+            shift
+            g-rmdir "$@"
+            ;;
+        "g-ls")
+            shift
+            g-ls "$@"
+            ;;
+        "g-help"|"help"|"-h"|"--help"|"")
+            show_help
+            ;;
+        *)
+            echo -e "${RED}Error: Unknown command '$1'${NC}"
+            echo "Use './git-commands.sh g-help' to see available commands"
+            exit 1
+            ;;
+    esac
+fi
+
+# Symlink handling - detect when called via symlink
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]] && [[ "$(basename "$0")" != "git-commands.sh" ]]; then
+    COMMAND_NAME=$(basename "$0")
+    
+    case "$COMMAND_NAME" in
+        "g-init")
+            g-init "$@"
+            ;;
+        "g-clone")
+            g-clone "$@"
+            ;;
+        "g-commit")
+            g-commit "$@"
+            ;;
+        "g-push")
+            g-push "$@"
+            ;;
+        "g-pushall")
+            g-pushall "$@"
+            ;;
+        "g-mkdir")
+            g-mkdir "$@"
+            ;;
+        "g-rm")
+            g-rm "$@"
+            ;;
+        "g-rmdir")
+            g-rmdir "$@"
+            ;;
+        "g-ls")
+            g-ls "$@"
+            ;;
+        "g-help")
+            show_help
+            ;;
+        "git-commands.sh")
+            # This should never be reached due to the condition above
+            echo -e "${RED}Error: This should not happen${NC}"
+            exit 1
+            ;;
+        *)
+            echo -e "${RED}Error: Unknown command '$COMMAND_NAME'${NC}"
+            echo "Use 'g-help' to see available commands"
+            exit 1
+            ;;
+    esac
+fi

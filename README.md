@@ -12,10 +12,149 @@ A simplified command-line tool that combines Git repository management with Linu
 
 ## Installation
 
-1. Download the `git-commands.sh` file
-2. Make it executable:
+### Quick Setup
+
+1. **Clone the repository:**
+
     ```bash
-    chmod +x git-commands.sh
+    git clone <repository-url>
+    cd assignment-1-devops
+    ```
+
+2. **Run the setup script:**
+
+    ```bash
+    chmod +x setup.sh
+    ./setup.sh
+    ```
+
+3. **Add to your PATH manually:**
+
+    **For Bash users:**
+
+    ```bash
+    echo 'export PATH="$PATH:$(pwd)"' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+
+    **For Zsh users:**
+
+    ```bash
+    echo 'export PATH="$PATH:$(pwd)"' >> ~/.zshrc
+    source ~/.zshrc
+    ```
+
+4. **Verify installation:**
+    ```bash
+    g-help
+    ```
+
+### Manual Installation
+
+If you prefer to set up manually:
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone <repository-url>
+    cd assignment-1-devops
+    ```
+
+2. **Make scripts executable:**
+
+    ```bash
+    chmod +x *.sh
+    ```
+
+3. **Add to your PATH:**
+
+    **For Bash users:**
+
+    ```bash
+    echo 'export PATH="$PATH:$(pwd)"' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+
+    **For Zsh users:**
+
+    ```bash
+    echo 'export PATH="$PATH:$(pwd)"' >> ~/.zshrc
+    source ~/.zshrc
+    ```
+
+4. **Test the installation:**
+    ```bash
+    ./git-commands.sh g-help
+    ```
+
+## Uninstallation
+
+### Quick Uninstall
+
+1. **Run the uninstall script:**
+
+    ```bash
+    ./uninstall.sh
+    ```
+
+2. **Remove from your PATH manually:**
+
+    **For Bash users:**
+
+    ```bash
+    # Edit ~/.bashrc and remove the line:
+    # export PATH="$PATH:/path/to/assignment-1-devops"
+    nano ~/.bashrc
+    source ~/.bashrc
+    ```
+
+    **For Zsh users:**
+
+    ```bash
+    # Edit ~/.zshrc and remove the line:
+    # export PATH="$PATH:/path/to/assignment-1-devops"
+    nano ~/.zshrc
+    source ~/.zshrc
+    ```
+
+3. **Remove the repository directory:**
+    ```bash
+    cd ..
+    rm -rf assignment-1-devops
+    ```
+
+### Manual Uninstall
+
+If you prefer to uninstall manually:
+
+1. **Remove symlinks:**
+
+    ```bash
+    rm -f g-init g-clone g-commit g-push g-pushall g-mkdir g-rm g-rmdir g-ls g-help
+    ```
+
+2. **Remove from your PATH:**
+
+    **For Bash users:**
+
+    ```bash
+    # Edit ~/.bashrc and remove the PATH line
+    nano ~/.bashrc
+    source ~/.bashrc
+    ```
+
+    **For Zsh users:**
+
+    ```bash
+    # Edit ~/.zshrc and remove the PATH line
+    nano ~/.zshrc
+    source ~/.zshrc
+    ```
+
+3. **Remove the repository directory:**
+    ```bash
+    cd ..
+    rm -rf assignment-1-devops
     ```
 
 ## Usage
